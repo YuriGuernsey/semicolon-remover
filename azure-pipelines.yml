@@ -34,12 +34,17 @@ steps:
   displayName: Start xvfb
   condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
 
-
+- bash: |
+    echo ">>> Compile vscode-test"
+    yarn && yarn run
+    echo ">>> Compiled vscode-test"
+  displayName: Run Tests
+  env:
+    DISPLAY: ':99.0'
     
 - bash: |
     echo ">>> Publish"
     yarn deploy
   displayName: Publish
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['Agent.OS'], 'Linux'))
   env:
     VSCE_PAT: $(VSCE_PAT1)
