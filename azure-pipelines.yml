@@ -1,5 +1,5 @@
 variables:
-  YARN_CACHE_FOLDER: \node_modules
+  YARN_CACHE_FOLDER: /node_modules
   
 trigger:
   branches:
@@ -35,18 +35,10 @@ steps:
   condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
   
 - bash: |
-    echo ">>> Compile"
-    yarn && yarn compile
-    echo ">>> Compiled"
-    echo ">>> Run sample integration test"
-    yarn && yarn compile && yarn test
-  displayName: Run Tests
-  env:
-    DISPLAY: ':99.0'
-
-- bash: |
     echo ">>> Publish"
     yarn deploy
+    vsce package
+    vsce publish
   displayName: Publish
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['Agent.OS'], 'Linux'))
   env:
