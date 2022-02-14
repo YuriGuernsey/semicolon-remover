@@ -30,7 +30,17 @@ steps:
     echo ">>> Started xvfb"
   displayName: Start xvfb
   condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
-
+  
+- bash: |
+    echo ">>> Compile semicolon-remover"
+    yarn && yarn compile
+    echo ">>> Compiled semicolon-remover"
+    cd sample
+    echo ">>> Run sample integration test"
+    yarn && yarn compile && yarn test
+  displayName: Run Tests
+  env:
+    DISPLAY: ':99.0'
 
 - bash: |
     echo ">>> Publish"
