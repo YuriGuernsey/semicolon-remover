@@ -9,7 +9,7 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument((e) => {
+	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(() => {
 		
 		let doc = vscode.window.activeTextEditor.document;
 
