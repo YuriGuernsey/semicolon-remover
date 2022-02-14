@@ -32,10 +32,9 @@ steps:
   condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
   
 - bash: |
-    echo ">>> Compile semicolon-remover"
+    echo ">>> Compile"
     yarn && yarn compile
-    echo ">>> Compiled semicolon-remover"
-    cd sample
+    echo ">>> Compiled"
     echo ">>> Run sample integration test"
     yarn && yarn compile && yarn test
   displayName: Run Tests
